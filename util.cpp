@@ -6,11 +6,11 @@ int MOD = 1e9 + 7;
 const int N = 1e6;
 
 // Global arrays
-int fact[N + 1];          // Factorial
-int divisors[N];         // Divisors
-int spf[N];             // Smallest Prime Factor
-int prefix[N];         // Prefix Sum
-vector<int> adj[N];   // adjacency list
+int fact[N + 1];    // Factorial
+int divisors[N];    // Divisors e.g divisors[6] = 4 (1,2,3,6), divisors[7] = 2 (1,7)
+int spf[N];         // Smallest Prime Factor
+int prefix[N];      // Prefix Sum
+vector<int> adj[N]; // adjacency list
 bool visited[N];
 
 // Section 1: Mathematical Operations and Modular Arithmetic
@@ -41,24 +41,29 @@ int binarySearch(vector<int> &arr, int target);
 // Section 5: Two Pointers Technique
 int twoPointersExample(vector<int> &arr, int target);
 
+bool isGood(int num, int a, int b) {
+  if (num == 0) return false;
+  while (num > 0) {
+      int digit = num % 10;
+      if (digit != a && digit != b) return false;
+      num /= 10;
+  }
+  return true;
+}
 
 void solve() {
-  int n, x;
-  cin >> n;
-  vector<int> vec;
-  for(int i = 0; i < n; i++) {
-    cin >> x;
-    vec.push_back(x);
-  }
-  
-  int cntr = 1, temp = vec[0];
-  for(int i = 1; i < vec.size(); i++) {
-    if(temp <= vec[i]) {
-      cntr++;
+  int a, b, n;
+  cin >> a >> b >> n;
+  buildF();
+
+  int cntr = 0;
+  for (int i = 0; i <= n; i++) {
+    int sum = a * i + b * (n - i);
+    if (isGood(sum, a, b)) {
+      cntr = (cntr + nCr(n, i)) % MOD;
     }
-    temp = vec[i];
   }
-  cout << cntr;
+  cout << cntr << endl;
 }
 
 // MAIN FUNCTION
