@@ -242,6 +242,22 @@ int knapsack(int S, int N, vector<pair<int, int>> &items) {
   return dp[S];
 }
 
+long long house_robber(const vector<long long>& coins) {
+  int n = coins.size();
+  if (n == 0) return 0;
+  if (n == 1) return coins[0];
+
+  vector<long long> dp(n);
+  dp[0] = coins[0];
+  dp[1] = max(coins[0], coins[1]);
+
+  for (int i = 2; i < n; ++i) {
+      dp[i] = max(dp[i - 1], dp[i - 2] + coins[i]);
+  }
+
+  return dp[n - 1];
+}
+
 int sumDigit(int x) {
   int s = 0;
   while(x) {
