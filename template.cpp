@@ -209,6 +209,22 @@ void bfs(int start) {
   }
 }
 
+// DP for coin problem
+int minCoins(int coins[], int n, int target) {
+  vector<int> dp(target + 1, INT_MAX);
+  dp[0] = 0; // Base case: 0 coins to make sum 0
+
+  for (int i = 1; i <= target; ++i) {
+    for (int j = 0; j < n; ++j) {
+      if (coins[j] <= i && dp[i - coins[j]] != INT_MAX) {
+        dp[i] = min(dp[i], dp[i - coins[j]] + 1);
+      }
+    }
+  }
+
+  return dp[target] == INT_MAX ? -1 : dp[target];
+}
+
 int sumDigit(int x) {
   int s = 0;
   while(x) {
