@@ -209,8 +209,27 @@ void bfs(int start) {
   }
 }
 
+int sumDigit(int x) {
+  int s = 0;
+  while(x) {
+    s += x % 10;
+    x /= 10;
+  }
+  return s;
+}
+
 void solve() {
-  
+  sieve();
+  int n, l, r;
+  cin >> n;
+  while(n--) {
+    int cntr = 0;
+    cin >> l >> r;
+    for(int i = l; i <= r; i++) {
+      if(is_prime[sumDigit(i)]) cntr++; 
+    }
+    cout << cntr << endl;
+  }
 }
 
 int main() {
