@@ -225,6 +225,23 @@ int minCoins(int coins[], int n, int target) {
   return dp[target] == INT_MAX ? -1 : dp[target];
 }
 
+// general knapsack solution
+int knapsack(int S, int N, vector<pair<int, int>> &items) {
+  vector<int> dp(S + 1, 0);
+
+  for (int i = 0; i < N; ++i) {
+    int size = items[i].first;
+    int value = items[i].second;
+
+    // Traverse backwards to avoid overwriting needed values
+    for (int s = S; s >= size; --s) {
+      dp[s] = max(dp[s], dp[s - size] + value);
+    }
+  }
+
+  return dp[S];
+}
+
 int sumDigit(int x) {
   int s = 0;
   while(x) {
