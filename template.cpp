@@ -16,6 +16,18 @@ bool is_prime[N + 1]; // All Primes from 1 to N
 vector<int> prime_prefix(N, 0);
 
 // Basic math operations
+int add(int a, int b) {
+  a += b;
+  if (a >= MOD) a -= MOD;
+  return a;
+}
+
+int sub(int a, int b) {
+  a -= b;
+  if (a < 0) a += MOD;
+  return a;
+}
+
 int mul(int a, int b) {
   return 1LL * a * b % MOD;
 }
@@ -145,6 +157,16 @@ int rangeSum(int l, int r) {
 }
 
 // Search functions
+// Lower Bound: first index ≥ target
+int lower_bound_idx(const vector<int>& a, int target) {
+  return lower_bound(a.begin(), a.end(), target) - a.begin();
+}
+
+// Upper Bound: first index > target
+int upper_bound_idx(const vector<int>& a, int target) {
+  return upper_bound(a.begin(), a.end(), target) - a.begin();
+}
+
 int binarySearch(const vector<int>& arr, int target) {
   int left = 0;
   int right = arr.size() - 1;
@@ -187,32 +209,8 @@ void bfs(int start) {
   }
 }
 
-// Problem solution
 void solve() {
-  int t;
-  cin >> t;
-  while (t--) {
-    int n, m;
-    cin >> n;
-    vector<int> speeds(n);
-    for (int i = 0; i < n; i++) {
-      cin >> speeds[i];
-    }
-    sort(speeds.begin(), speeds.end());
-
-    cin >> m;
-    vector<int> queries(m);
-    for (int i = 0; i < m; i++) {
-      cin >> queries[i];
-    }
-
-    for (int q : queries) {
-      auto it = upper_bound(speeds.begin(), speeds.end(), q);
-      int count = speeds.end() - it;
-      cout << count << " ";
-    }
-    cout << endl;
-  }
+  
 }
 
 int main() {
