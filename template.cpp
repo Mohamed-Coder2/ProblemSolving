@@ -314,6 +314,39 @@ int maximizeValue(vector<pair<int, int>>& items, int max_budget) {
     return dp[max_budget];
 }
 
+/**
+ * Counts the number of positive integer solutions (X,Y,Z) to:
+ * aX + b*(Y * cZ) = target
+ * 
+ * @param a Coefficient of X
+ * @param b Coefficient of Y*cZ product
+ * @param c Multiplier for Z in the product
+ * @param target The right-hand side value (could be N, N², etc.)
+ * @return Number of valid (X,Y,Z) tuples
+ */
+ll count_solutions(int a, int b, int c, int target) {
+    ll count = 0;
+    int max_k = target / b; // Maximum possible value of Y*cZ
+    
+    for (int k = 1; k <= max_k; k++) {
+        // Check if (target - b*k) is divisible by a
+        int remaining = target - b * k;
+        if (remaining > 0 && remaining % a == 0) {
+            // Now find number of (Y,Z) pairs where Y*(cZ) = k
+            // Which is equivalent to Y*Z = k/c
+            
+            if (k % c != 0) continue; // k must be divisible by c
+            
+            int yz_product = k / c;
+            if (yz_product >= 1 && yz_product < N) {
+                count += divisors[yz_product];
+            }
+        }
+    }
+    
+    return count;
+}
+
 // Main function
 int main() {
     ios_base::sync_with_stdio(false);
